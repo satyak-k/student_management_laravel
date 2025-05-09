@@ -1,66 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# University Student Management CRUD Application (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+This is a web application built using Laravel 9+ and MySQL to manage university student records. It provides full Create, Read, Update, and Delete (CRUD) functionality for student information, along with features like teacher assignment, search, pagination, soft deletes, and user authentication.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* PHP >= 8.0
+* Composer
+* MySQL Database
+* Node.js and npm (for frontend assets)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+* **Student Management:**
+    * Create, read, update, and soft-delete student records.
+    * Student fields: `student_name`, `class_teacher_id` (linking to a teacher), `class`, `admission_date`, `yearly_fees`.
+    * Displays the assigned teacher's name in the student list.
+* **Teacher Management:** (Basic setup for assigning class teachers)
+    * Create and manage teacher records.
+* **Relationships:**
+    * Establishes a one-to-many relationship between teachers and students (one teacher can have multiple students).
+* **Database:**
+    * Uses MySQL database.
+    * Database schema defined through Laravel migrations.
+    * Sample data populated using Laravel seeders.
+* **Form Validation:**
+    * Implements server-side validation for all form inputs to ensure data integrity.
+* **User Interface:**
+    * User-friendly interface built with Blade templates.
+    * Responsive design using Bootstrap for compatibility across devices.
+    * Dropdown to select the class teacher when creating or editing a student.
+* **Functionality:**
+    * Lists all students with pagination for easy navigation.
+    * Provides a dedicated form to add new student records.
+    * Allows editing and soft-deleting individual student records.
+    * Implements search functionality to filter students by name or class.
+    * Only soft delete is implemented (deleted records are not permanently removed).
+    * Integrates JS DataTables for enhanced table features like sorting and filtering on the client-side.
+* **User Authentication:**
+    * Implements user authentication using Laravel's built-in system to secure access to the application.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Follow these steps to set up the application on your local machine:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/satyak-k/student_management_laravel.git
+    cd student_management
+    ```
 
-## Laravel Sponsors
+2.  **Install Composer Dependencies:**
+    ```bash
+    composer install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3.  **Copy Environment File:**
+    ```bash
+    cp .env.example .env
+    ```
 
-### Premium Partners
+4.  **Configure Database:**
+    * Open the `.env` file and update the database credentials to match your MySQL setup:
+        ```env
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=your_database_name
+        DB_USERNAME=your_database_username
+        DB_PASSWORD=your_database_password
+        ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5.  **Run Migrations:**
+    ```bash
+    php artisan migrate
+    ```
+
+6.  **Run Seeders (to populate sample data):**
+    ```bash
+    php artisan db:seed
+    ```
+
+7.  **Install Frontend Dependencies and Compile Assets:**
+    ```bash
+    npm install
+    npm run dev
+    ```
+
+8.  **Generate Application Key:**
+    ```bash
+    php artisan key:generate
+    ```
+
+9.  **Set Up User Authentication (Laravel Breeze):**
+    ```bash
+    composer require laravel/breeze --dev
+    php artisan breeze:install
+    npm install
+    npm run dev
+    php artisan migrate
+    ```
+    *(Follow the prompts during the Breeze installation)*
+
+10. **Serve the Application:**
+    ```bash
+    php artisan serve
+    ```
+    Open your web browser and navigate to `http://127.0.0.1:8000` to access the application.
+
+## Usage
+
+1.  **Authentication:**
+    * Register a new user or log in with an existing account to access the student management features.
+    * The authentication routes (`/login`, `/register`) are provided by Laravel Breeze.
+2.  **Student Management:**
+    * Navigate to the students section (e.g., `/students`).
+    * **Listing Students:** Displays a paginated list of students with their name, class teacher, class, admission date, and yearly fees. The teacher's name is shown in the "Class Teacher" column. JS DataTables provides sorting and filtering capabilities.
+    * **Adding Students:** Click on the "Add Student" button to open a form where you can enter new student details, including selecting a class teacher from a dropdown.
+    * **Editing Students:** Click the "Edit" button next to a student record to modify their information.
+    * **Deleting Students (Soft Delete):** Click the "Delete" button next to a student record to soft-delete them. The record will remain in the database but will not be displayed in the active student list.
+    * **Searching Students:** Use the search bar to filter students by their name or class.
+
+## Database Structure
+
+* **`students` Table:**
+    * `id` (INT, primary key, auto-increment)
+    * `student_name` (VARCHAR)
+    * `class_teacher_id` (FOREIGN KEY, INT, references `teachers.id`)
+    * `class` (VARCHAR)
+    * `admission_date` (DATE)
+    * `yearly_fees` (DECIMAL)
+    * `created_at` (TIMESTAMP)
+    * `updated_at` (TIMESTAMP)
+    * `deleted_at` (TIMESTAMP, nullable for soft deletes)
+* **`teachers` Table:**
+    * `id` (INT, primary key, auto-increment)
+    * `teacher_name` (VARCHAR)
+    * `created_at` (TIMESTAMP)
+    * `updated_at` (TIMESTAMP)
+
+## Relationships
+
+* **`Student` belongsTo `Teacher`:** Each student is associated with one class teacher through the `class_teacher_id` foreign key.
+* **`Teacher` hasMany `Student`:** Each teacher can have multiple students assigned to them.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Feel free to contribute to this project by submitting pull requests or reporting issues.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](LICENSE)
